@@ -8,12 +8,16 @@ const URL = process.env.MONGO_URL;
 const httpStatusText = require('./utils/httpStatusText');
 
 const usersRouter = require('./routes/users.route');
+const ordersRouter = require('./routes/orders.route');
+
+const Order = require('./models/order.model');
 
 app.use(cors()) // TODO: remove this in production
 app.use(express.json());
 
 // routes
 app.use('/api/users', usersRouter);
+app.use('/api/orders', ordersRouter);
 
 // home route
 app.get('/', (req, res) => {
