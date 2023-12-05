@@ -29,11 +29,11 @@ To set up the NovelNest server locally:
 ## Tasks
 
 - [X] Create the repo and setup the environment --> Ahmed M. Ezzeldeen
-- [ ] Create the folder structure. --> Ahmed M. Ezzeldeen
+- [X] Create the folder structure. --> Ahmed M. Ezzeldeen
 - [ ] User Entity --> Ahmed M. Ezzeldeen 
-	- [ ] Create User Schema Model (from ERD). 
-	- [ ] Create (CRUD Operation to the Users).
-	- [ ] Create Authentication to users (Login , Register ) by using JWT.
+	- [X] Create User Schema Model (from ERD). 
+	- [X] Create (CRUD Operation to the Users).
+	- [X] Create Authentication to users (Login , Register ) by using JWT.
 	- [ ] Add the avatar image to users (Handle the upload files in our server by using multer).
 	- [ ] Enhancement the code over all
 - [ ] Book Entity --> Youssef Amir
