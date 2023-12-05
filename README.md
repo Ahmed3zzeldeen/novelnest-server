@@ -15,3 +15,37 @@ To set up the NovelNest server locally:
 3. Install necessary dependencies by running `npm install`.
 4. Configure the environment variables required for database connections, authentication, etc.
 5. Start the server by running `npm start`.
+
+## Important Notes :
+**To ensure a streamlined development process, adhere to the following guidelines:**
+
+- **1. Folder Structure Guidelines:**
+> Ensure a well-organized folder structure for server-side development, distinctly arranging directories for controllers, routes, middlewares, models, and utilities
+- **2. [Git Flow](https://nvie.com/posts/a-successful-git-branching-model/) Guidelines:**
+> Follow a disciplined branching strategy (Example) such as using master/main for production, development for ongoing work, and feature branches for new functionalities or fixes.
+- **3. JSON Response ([JSend Rules](https://github.com/omniti-labs/jsend)) Guidelines:**
+>Implement a uniform response structure (Example) adhering to JSend specifications for successful and error responses, coupled with appropriate HTTP status codes.
+
+## Tasks
+
+- [X] Create the repo and setup the environment --> Ahmed M. Ezzeldeen
+- [ ] Create the folder structure. --> Ahmed M. Ezzeldeen
+- [ ] User Entity --> Ahmed M. Ezzeldeen 
+	- [ ] Create User Schema Model (from ERD). 
+	- [ ] Create (CRUD Operation to the Users).
+	- [ ] Create Authentication to users (Login , Register ) by using JWT.
+	- [ ] Add the avatar image to users (Handle the upload files in our server by using multer).
+	- [ ] Enhancement the code over all
+- [ ] Book Entity --> Youssef Amir
+	- [ ] Create Book Schema Model (from ERD).
+	- [ ] Create (CRUD Operation to the Books).
+		-  Make Sure handle Create , Update and Delete only Allowed to Admin User
+	- [ ] Create the Filters to find a book by (bookName , authorName , category  , etc)
+	- [ ] Create the API Pagination to get books
+- [ ] Orders (Purchase) Entity --> Mustafa Ahmed
+	- [ ] Create Purchase Schema Model (from ERD).
+	- [ ] Create (CRUD Operation to the Purchase).
+	- [ ] Create Get all Purchases for a single user.
+	- [ ] Create Get all Purchases for a single book.
+
+
