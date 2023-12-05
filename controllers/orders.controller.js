@@ -2,15 +2,11 @@ const asyncWrapper = require("../middlewares/asyncWrapper");
 const User = require('../models/user.model');
 const httpStatusText = require('../utils/httpStatusText');
 const appError = require('../utils/appError');
-const bcrypt = require('bcryptjs');
-const generateJWT = require("../utils/generateJWT");
-const userRoles = require('../utils/userRoles');
-const User = require('./../models/user.model');
-const { default: Order } = require("../models/order.model");
+const Order = require("../models/order.model");
 
 
 const getALLOrdersOfUser = asyncWrapper(async (req , res) => {
-    const id = req.body.id;
+    const id = req.params.id;
     const user = User.findById(id);
     if (!user) {
         const error = appError.create('User not found' , 404 , httpStatusText.FAIL);
