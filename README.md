@@ -43,7 +43,7 @@ To set up the NovelNest server locally:
 	- [ ] Create the Filters to find a book by (bookName , authorName , category  , etc)
 	- [ ] Create the API Pagination to get books
 - [ ] Orders (Purchase) Entity --> Mustafa Ahmed
-	- [ ] Create Purchase Schema Model (from ERD).
+	- [X] Create Purchase Schema Model (from ERD).
 	- [ ] Create (CRUD Operation to the Purchase).
 	- [ ] Create Get all Purchases for a single user.
 	- [ ] Create Get all Purchases for a single book.
