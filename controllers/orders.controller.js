@@ -5,7 +5,7 @@ const appError = require('../utils/appError');
 const Order = require("../models/order.model");
 
 
-const getALLOrdersOfUser = asyncWrapper(async (req , res) => {
+const getALLOrdersOfUser = asyncWrapper(async (req , res , next) => {
     const id = req.params.id;
     const user = await User.findById(id);
     if (!user) {
