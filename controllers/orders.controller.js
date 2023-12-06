@@ -7,13 +7,13 @@ const Order = require("../models/order.model");
 
 const getALLOrdersOfUser = asyncWrapper(async (req , res) => {
     const id = req.params.id;
-    const user = User.findById(id);
+    const user = await User.findById(id);
     if (!user) {
         const error = appError.create('User not found' , 404 , httpStatusText.FAIL);
         return next(error);
     }
     const ordersOfUser = await Order.find({user_id: id});
-    res.json({sttaus: httpStatusText.SUCCESS, data: {ordersOfUser}});
+    res.json({status: httpStatusText.SUCCESS, data: {ordersOfUser}});
 });
 
 // const addOrder = asyncWrapper(async (req , res) => {
