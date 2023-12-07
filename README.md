@@ -35,7 +35,7 @@ To set up the NovelNest server locally:
 	- [X] Create (CRUD Operation to the Users).
 	- [X] Create Authentication to users (Login , Register ) by using JWT.
 	- [X] Add the avatar image to users (Handle the upload files in our server by using multer).
-	- [X] Create the API Pagination to get books
+	- [X] Create the API Pagination to get users
 	- [X] Enhancement the code over all
 - [ ] Book Entity --> Youssef Amir
 	- [ ] Create Book Schema Model (from ERD).
