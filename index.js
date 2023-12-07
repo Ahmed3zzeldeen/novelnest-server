@@ -20,7 +20,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // routes
 app.use('/api/users', usersRouter);
 app.use('/api/orders', ordersRouter);
-app.use('/api/books' , booksRouter);
+app.use('/api/books', booksRouter);
 
 // home route
 app.get('/', (req, res) => {

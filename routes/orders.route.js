@@ -16,7 +16,7 @@ router.route('/:id')
 
 router.route('/userOrders/:id')
             .get(verifyToken , ordersController.getALLOrdersOfUser);
-router.route('/bookOrders/:isbn')
+router.route('/bookOrders/:id')
             .get(verifyToken , ordersController.getAllOrdersOfBook);
 
 module.exports = router;

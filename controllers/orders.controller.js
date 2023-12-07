@@ -89,7 +89,9 @@ const createOrder = asyncWrapper(async (req , res , next) => {
 // TODO: TRY IT
 const updateOrder = asyncWrapper(async (req , res , next) => {
     const body = req.body;
-    const order_id = body.id;
+    console.log(body);
+    const order_id = req.params.id;
+    console.log(order_id);
     const order = await Order.findById(order_id);
     if (!order) {
         const error = appError.create('Order not found' , 404 , httpStatusText.FAIL);
