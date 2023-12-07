@@ -10,15 +10,15 @@ const bookSchema = new mongoose.Schema({
     require:true
   },
   ISBN:{
-    type: int,
+    type: Number,
     require:true
   },
   BookPrice:{
-    type: int,
+    type: Number,
     require:true
   },
   NoPages:{
-    type: int,
+    type: Number,
     require:true
   },
   BookCover:{
@@ -30,11 +30,11 @@ const bookSchema = new mongoose.Schema({
     require:true
   },
   Rate:{
-    type: int, // number of Stars from 1 --> 5
+    type: Number, // number of Stars from 1 --> 5
     require:true
   },
   Replyno:{
-    type: int,
+    type: Number,
     require:true
   }
 });
