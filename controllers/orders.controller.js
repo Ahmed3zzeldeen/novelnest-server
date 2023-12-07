@@ -14,9 +14,8 @@ const getAllOrders = asyncWrapper(async(req , res , next) => {
     res.json({status: httpStatusText.SUCCESS , data: {orders}});
 });
 
-// FIXME:
 const readOrder = asyncWrapper(async(req , res , next) => {
-    const order_id = req.params.order_id;
+    const order_id = req.params.id;
     const order = await Order.findById(order_id);
     if (!order) {
         const error = appError.create('Order not found' , 404 , httpStatusText.FAIL);
@@ -38,24 +37,27 @@ const getALLOrdersOfUser = asyncWrapper(async (req , res , next) => {
 
 // FIXME:
 const getAllOrdersOfBook = asyncWrapper(async(req , res , next) => {
-    const book_id = req.params.book_id;
+    const book_id = req.params.id;
+    console.log(book_id);
     const book = await Book.findById(book_id);
+    console.log(book);
     if (!book) {
         const error = appError.create('Book not found' , 404 , httpStatusText.FAIL);
         return next(error);
     }
-    const bookOrders = [];
-    const orders = await Order.find({});
-    orders.forEach(order => {
-        const flag = false;
-        order.books.forEach(book => {
-            if (book.ISBN === isbn) {
-                flag = true;
-            }
-        })
-        if (flag) bookOrders.push(order);
-    });
-    res.json({status: httpStatusText.SUCCESS , data: {bookOrders}});
+    // const isbn = book.ISBN;
+    // const bookOrders = [];
+    // const orders = await Order.find({});
+    // orders.forEach(order => {
+    //     const flag = false;
+    //     order.books.forEach(book => {
+    //         if (book.ISBN === isbn) {
+    //             flag = true;
+    //         }
+    //     })
+    //     if (flag) bookOrders.push(order);
+    // });
+    // res.json({status: httpStatusText.SUCCESS , data: {bookOrders}});
 });
 
 const createOrder = asyncWrapper(async (req , res , next) => {
@@ -87,7 +89,7 @@ const createOrder = asyncWrapper(async (req , res , next) => {
 // TODO: TRY IT
 const updateOrder = asyncWrapper(async (req , res , next) => {
     const body = req.body;
-    const order_id = body.order_id;
+    const order_id = body.id;
     const order = await Order.findById(order_id);
     if (!order) {
         const error = appError.create('Order not found' , 404 , httpStatusText.FAIL);
