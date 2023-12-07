@@ -3,12 +3,12 @@ const router = express.Router();
 const booksController = require('../controllers/books.controller')
 
 router.route('/')
-              .get(booksController.listBooks);
+            .get(booksController.listBooks);
 router.route('/')
-              .post(booksController.createBook);
+            .post(booksController.createBook);
 router.route('/:id')
-              .delete(booksController.deleteBook);
+            .delete(booksController.deleteBook);
 router.route('/:id')
-              .patch(booksController.updateBook);            
+            .patch(booksController.updateBook);            
 
 module.exports = router;
