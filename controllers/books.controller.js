@@ -3,42 +3,39 @@ const Book = require('../models/books.model');
 const httpStatusText = require('../utils/httpStatusText');
 const appError = require('../utils/appError');
 
-
-
-const getAllBooks = asyncWrapper(async (req , res , next) => {
-  const name = req.query.BookName;
-  if (!name) {
-      const error = appError.create('Book not found' , 404 , httpStatusText.FAIL);
-      return next(error);
+const createBook = asyncWrapper(async(req , res , next) => {
+  const {
+    BookName ,
+    Author ,
+    ISBN ,
+    BookPrice ,
+    NoPages ,
+    BookCover ,
+    BookCategory ,
+    Rate ,
+    Replyno 
+  } = req.body;
+  const oldBook = await Book.findOne({ISBN: ISBN}); 
+  if (oldBook) {
+    const error = appError.create('Book is already exist' , 400 , httpStatusText.FAIL);
+    return next(error);
   }
-  const bookname = await Book.find({BookName: name});
-  res.json({staus: httpStatusText.SUCCESS, data: {bookname}});
+  const book = new Book();
+  if (BookName) book.BookName = BookName;
+  if (Author) book.Author = Author;
+  if (ISBN) book.ISBN = ISBN;
+  if (BookPrice) book.BookPrice = BookPrice;
+  if (NoPages) book.NoPages = NoPages;
+  if (BookCover) book.BookCover = BookCover;
+  if (BookCategory) book.BookCategory = BookCategory;
+  if (Rate) book.Rate = Rate;
+  if (Replyno) book.Replyno = Replyno;
+  await book.save();
+  res.send({status: httpStatusText.SUCCESS , data: {book}});
 });
 
-
-const getauthorName = asyncWrapper(async (req , res , next) => {
-  const Author = req.params.Author;
-  if (!Author) {
-      const error = appError.create('Author not found' , 404 , httpStatusText.FAIL);
-      return next(error);
-  }
-  const Authorname = await Book.find({Author: Authorname});
-  res.json({staus: httpStatusText.SUCCESS, data: {Authorname}});
-});
-
-const getbookbycategory = asyncWrapper(async (req , res , next) => {
-  const BookCategory = req.params.BookCategory;
-  if (!BookCategory) {
-      const error = appError.create('BookCategory not found' , 404 , httpStatusText.FAIL);
-      return next(error);
-  }
-  const BookCategorytype = await Order.find({BookCategory: BookCategorytype});
-  res.json({staus: httpStatusText.SUCCESS, data: {BookCategorytype}});
-});
 
 
 module.exports = {
-  getAllBooks,
-  getauthorName,
-  getbookbycategory
+  createBook
 }
