@@ -45,7 +45,7 @@ To set up the NovelNest server locally:
 - [ ] Orders (Purchase) Entity --> Mustafa Ahmed
 	- [X] Create Purchase Schema Model (from ERD).
 	- [ ] Create (CRUD Operation to the Purchase).
-	- [ ] Create Get all Purchases for a single user.
+	- [X] Create Get all Purchases for a single user.
 	- [ ] Create Get all Purchases for a single book.
 
 
