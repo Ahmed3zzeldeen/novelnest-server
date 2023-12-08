@@ -34,9 +34,9 @@ To set up the NovelNest server locally:
 	- [X] Create User Schema Model (from ERD). 
 	- [X] Create (CRUD Operation to the Users).
 	- [X] Create Authentication to users (Login , Register ) by using JWT.
-	- [X] Add the avatar image to users (Handle the upload files in our server by using multer).
+	- [X] Add the avatar image to users (Handle the files in our server by using multer).
 	- [X] Enhancement the code over all
--	  [X] Book Entity --> Youssef Amir
+-	[X] Book Entity --> Youssef Amir
   	- [X] Create Book Schema Model (from ERD).
   	- [X] Create (CRUD Operation to the Books).
   		-  Make Sure handle Create , Update and Delete only Allowed to Admin User
