@@ -1,167 +1,177 @@
 const asyncWrapper = require("../middlewares/asyncWrapper");
-const Book = require('../models/books.model');
-const httpStatusText = require('../utils/httpStatusText');
-const appError = require('../utils/appError');
+const Book = require("../models/books.model");
+const httpStatusText = require("../utils/httpStatusText");
+const appError = require("../utils/appError");
 
-const listBooks = asyncWrapper(async (req, res) => {
-  const { bookName, author, category } = req.query;
 
-  try {const asyncWrapper = require("../middlewares/asyncWrapper");
-  const Book = require('../models/books.model');
-  const httpStatusText = require('../utils/httpStatusText');
-  const appError = require('../utils/appError');
-  
-  const listBooks = asyncWrapper(async (req, res) => {
-    const { bookName, author, category } = req.query;
-  
-    try {
-      let query = {};
-  
-      if (bookName) {
-        query.BookName = new RegExp(bookName, 'i');
-      }
-  
-      if (author) {
-        query.Author = new RegExp(author, 'i');
-      }
-  
-      if (category) {
-        query.BookCategory = new RegExp(category, 'i');
-      }
-  
-      const books = await Book.find(query);
-      res.json(books);
-    }
-     catch (error) {
-      res.status(500).json({ message: error.message });
-    }});
-  
-  
-    const isAdmin = asyncWrapper((req, res) => {
-      if (req.user && req.user.isAdmin) {
-        next(); 
-      } else {
-        res.status(403).json({ message: 'Permission denied. Admin access required.' });
-      }
-    });
-    
-    const createBook = asyncWrapper(async (req, res) => {
-      try {
-        const newBook = await Book.create(req.body);
-        res.json({ message: 'Book created successfully.' , Book:newBook});
-      } catch (error) {
-        res.status(500).json({ message: error.message });
-      }
-    });
-    
-    const updateBook = asyncWrapper(async (req, res) => {
-      try {
-        const bookId = req.params.id;
-        const updatedBook = await Book.findByIdAndUpdate(bookId, req.body, { new: true });
-        if (!updatedBook) {
-          return res.status(404).json({ message: 'Book not found.' });
-        }
-    
-        res.json({ message: 'Book updated successfully.' , Book:updatedBook});
-      } catch (error) {
-        res.status(500).json({ message: error.message });
-      }
-    });
-    
-    const deleteBook = asyncWrapper(async (req, res) => {
-      try {
-        const bookId = req.params.id;
-        const deletedBook = await Book.findByIdAndDelete(bookId);
-    
-        if (!deletedBook) {
-          return res.status(404).json({ message: 'Book not found.' });
-        }
-        res.json({ message: 'Book deleted successfully.', book: deletedBook });
-      } catch (error) {
-        res.status(500).json({ message: error.message });
-      }
-    });
-  
-  
-  module.exports = {
-    listBooks,
-    isAdmin,
-    deleteBook,
-    updateBook,
-    createBook
+const getAllBooks = asyncWrapper(async(req , res , next) => {
+  const query = req.query;
+  const limit = query.limit || 10;
+  const page = query.page || 1;
+  const skip = (page - 1) * limit;
+
+  const books = await Book.find({}, {"__v": false, 'password': false}).limit(limit).skip(skip);
+  res.json({ status: httpStatusText.SUCCESS, data: {books}});
+});
+
+const getBookById = asyncWrapper(async (req, res, next) => {
+  const bookid = req.params.id;
+  const book = await Book.findById(bookid);
+  if (!book) {
+    const err = appError.create("Book not found", 404, httpStatusText.FAIL);
+    return next(err);
   }
-    let query = {};
+  res.json({ staus: httpStatusText.SUCCESS, data: { book } });
+});
 
-    if (bookName) {
-      query.BookName = new RegExp(bookName, 'i');
-    }
-
-    if (author) {
-      query.Author = new RegExp(author, 'i');
-    }
-
-    if (category) {
-      query.BookCategory = new RegExp(category, 'i');
-    }
-
-    const books = await Book.find(query);
-    res.json(books);
+const getBookByName = asyncWrapper(async (req, res, next) => {
+  const bookname = req.params.name;
+  const book = await Book.findOne({BookName: bookname});
+  if (!book) {
+    const err = appError.create("Book not found", 404, httpStatusText.FAIL);
+    return next(err);
   }
-    catch (error) {
-    res.status(500).json({ message: error.message });
-  }});
+  res.json({ staus: httpStatusText.SUCCESS, data: { book }});
+});
+
+const getBookByAuthorName = asyncWrapper(async (req, res, next) => {
+  const authername = req.params.author;
+  const book = await Book.findOne({Author: authername});
+  if (!book) {
+    const err = appError.create("authername not found", 404, httpStatusText.FAIL);
+    return next(err);
+  }
+  res.json({ staus: httpStatusText.SUCCESS, data: { book } });
+});
+
+const getBookByCategory = asyncWrapper(async (req, res, next) => {
+  const category = req.params.category;
+  const book = await Book.findOne({BookCategory: category});
+  if (!book) {
+    const err = appError.create("category not found", 404, httpStatusText.FAIL);
+    return next(err);
+  }
+  res.json({ staus: httpStatusText.SUCCESS, data: { book } });
+});
 
 
-  const isAdmin = asyncWrapper((req, res) => {
-    if (req.user && req.user.isAdmin) {
-      next(); 
-    } else {
-      res.status(403).json({ message: 'Permission denied. Admin access required.' });
+const createBook = asyncWrapper(async (req, res , next) => {
+    const {
+      BookName,
+      Author,
+      BookPrice,
+      ISBN,
+      NoPages,
+      BookCover,
+      BookCategory,
+      Rate,
+      Replyno,
+    } = req.body;
+    let book = await Book.findOne({ISBN: ISBN});
+    if (book) {
+      const err = appError.create('Book already exist' , 400 , httpStatusText.FAIL)
+      return next(err);
     }
-  });
-  
-  const createBook = asyncWrapper(async (req, res) => {
-    try {
-      const newBook = await Book.create(req.body);
-      res.json({ message: 'Book created successfully.' , Book:newBook});
-    } catch (error) {
-      res.status(500).json({ message: error.message });
+    book = new Book();
+    if (BookName) {
+      book.BookName = BookName;
     }
-  });
-  
-  const updateBook = asyncWrapper(async (req, res) => {
-    try {
-      const bookId = req.params.id;
-      const updatedBook = await Book.findByIdAndUpdate(bookId, req.body, { new: true });
-      if (!updatedBook) {
-        return res.status(404).json({ message: 'Book not found.' });
-      }
-  
-      res.json({ message: 'Book updated successfully.' , Book:updatedBook});
-    } catch (error) {
-      res.status(500).json({ message: error.message });
+    if (Author) {
+      book.Author = Author;
     }
-  });
-  
-  const deleteBook = asyncWrapper(async (req, res) => {
-    try {
-      const bookId = req.params.id;
-      const deletedBook = await Book.findByIdAndDelete(bookId);
-  
-      if (!deletedBook) {
-        return res.status(404).json({ message: 'Book not found.' });
-      }
-      res.json({ message: 'Book deleted successfully.', book: deletedBook });
-    } catch (error) {
-      res.status(500).json({ message: error.message });
+    if (BookPrice) {
+      book.BookPrice = BookPrice;
     }
-  });
+    if (ISBN) {
+      book.ISBN = ISBN;
+    }
+    if (NoPages) {
+      book.NoPages = NoPages;
+    }
+    if (BookCategory) {
+      book.BookCategory = BookCategory;
+    }
+    if (BookCover) {
+      book.BookCover = BookCover;
+    }
+    if (Rate) {
+      book.Rate = Rate;
+    }
+    if (Replyno) {
+      book.Replyno = Replyno;
+    }
+    await book.save();
+    res.json({status: httpStatusText.SUCCESS , data: {book}});
+  }
+);
 
+const updateBookByid = asyncWrapper(async (req, res, next) => {
+  const bookId = req.params.id;
+  const {
+    BookName,
+    Author,
+    BookPrice,
+    ISBN,
+    NoPages,
+    BookCover,
+    BookCategory,
+    Rate,
+    Replyno,
+  } = req.body;
+  const book = await Book.findById(bookId);
+  if (!book) {
+    const err = appError.create("Book not found", 404, httpStatusText.FAIL);
+    return next(err);
+  }
+  if (BookName) {
+    book.BookName = BookName;
+  }
+  if (Author) {
+    book.Author = Author;
+  }
+  if (BookPrice) {
+    book.BookPrice = BookPrice;
+  }
+  if (ISBN) {
+    book.ISBN = ISBN;
+  }
+  if (NoPages) {
+    book.NoPages = NoPages;
+  }
+  if (BookCategory) {
+    book.BookCategory = BookCategory;
+  }
+  if (BookCover) {
+    book.BookCover = BookCover;
+  }
+  if (Rate) {
+    book.Rate = Rate;
+  }
+  if (Replyno) {
+    book.Replyno = Replyno;
+  }
+  await book.save();
+  res.json({ status: httpStatusText.SUCCESS, data: { book: book } });
+});
+
+const deleteBook = asyncWrapper(async (req, res, next) => {
+  const bookId = req.params.id;
+  const book = await Book.findById(bookId);
+  if (!book) {
+    const err = appError.create("Book not found", 404, httpStatusText.FAIL);
+    return next(err);
+  }
+  await book.deleteOne();
+  res.json({ status: httpStatusText.SUCCESS, data: { book } });
+});
 
 module.exports = {
-  listBooks,
-  isAdmin,
+  getAllBooks,
+  getBookById,
   deleteBook,
-  updateBook,
-  createBook
-}
+  updateBookByid,
+  createBook,
+  getBookByName,
+  getBookByAuthorName,
+  getBookByCategory
+};
