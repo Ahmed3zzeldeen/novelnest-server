@@ -10,6 +10,7 @@ const path = require('path');
 
 const usersRouter = require('./routes/users.route');
 const ordersRouter = require('./routes/orders.route');
+const booksRouter = require('./routes/books.route');
 
 
 app.use(cors()) // TODO: remove this in production
@@ -19,6 +20,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // routes
 app.use('/api/users', usersRouter);
 app.use('/api/orders', ordersRouter);
+app.use('/api/books', booksRouter);
 
 // home route
 app.get('/', (req, res) => {
