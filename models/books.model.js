@@ -10,7 +10,7 @@ const bookSchema = new mongoose.Schema({
     require:true
   },
   ISBN:{
-    type: Number,
+    type: String,
     require:true
   },
   BookPrice:{
