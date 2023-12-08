@@ -5,9 +5,15 @@ const appError = require('../utils/appError');
 const bcrypt = require('bcryptjs');
 const generateJWT = require("../utils/generateJWT");
 const userRoles = require('../utils/userRoles');
+const path = require('path');
 
 const getAllUsers = asyncWrapper(async (req,res) => {
-    const users = await User.find({}, {"__v": false, 'password': false});
+    const query = req.query;
+    const limit = query.limit || 10;
+    const page = query.page || 1;
+    const skip = (page - 1) * limit;
+
+    const users = await User.find({}, {"__v": false, 'password': false}).limit(limit).skip(skip);
     res.json({ status: httpStatusText.SUCCESS, data: {users}});
 })
 
@@ -33,8 +39,10 @@ const deleteUserById = asyncWrapper(async (req,res) => {
 
 const updateUserById = asyncWrapper(async (req,res , next) => {
     const id = req.params.id;
-    const { firstName, lastName, email , username , password } = req.body;
-    
+    let { firstName, lastName, email , username , password } = req.body;
+    email = email.toLowerCase();
+    username = username.toLowerCase();
+
     const user = await User.findById(id);
     if(!user) {
         const error = appError.create('User not found', 404, httpStatusText.FAIL)
@@ -61,6 +69,10 @@ const updateUserById = asyncWrapper(async (req,res , next) => {
     if(password) {
         const hashedPassword = await bcrypt.hash(password, 10);    
         user.password = hashedPassword;
+    }
+    if(req.file) {
+        let avatarFileName = req.file.filename;
+        user.avatar = path.join('uploads' , avatarFileName);
     }
     
     await user.save();

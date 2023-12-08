@@ -30,22 +30,22 @@ To set up the NovelNest server locally:
 
 - [X] Create the repo and setup the environment --> Ahmed M. Ezzeldeen
 - [X] Create the folder structure. --> Ahmed M. Ezzeldeen
-- [ ] User Entity --> Ahmed M. Ezzeldeen 
+- [X] User Entity --> Ahmed M. Ezzeldeen 
 	- [X] Create User Schema Model (from ERD). 
 	- [X] Create (CRUD Operation to the Users).
 	- [X] Create Authentication to users (Login , Register ) by using JWT.
-	- [ ] Add the avatar image to users (Handle the upload files in our server by using multer).
-	- [ ] Enhancement the code over all
+	- [X] Add the avatar image to users (Handle the upload files in our server by using multer).
+	- [X] Enhancement the code over all
 -	  [X] Book Entity --> Youssef Amir
-	- [X] Create Book Schema Model (from ERD).
-	- [X] Create (CRUD Operation to the Books).
-		-  Make Sure handle Create , Update and Delete only Allowed to Admin User
+  	- [X] Create Book Schema Model (from ERD).
+  	- [X] Create (CRUD Operation to the Books).
+  		-  Make Sure handle Create , Update and Delete only Allowed to Admin User
 	- [X] Create the Filters to find a book by (bookName , authorName , category  , etc)
 	- [X] Create the API Pagination to get books
 - [ ] Orders (Purchase) Entity --> Mustafa Ahmed
 	- [X] Create Purchase Schema Model (from ERD).
 	- [ ] Create (CRUD Operation to the Purchase).
-	- [ ] Create Get all Purchases for a single user.
+	- [X] Create Get all Purchases for a single user.
 	- [ ] Create Get all Purchases for a single book.
 
 

@@ -6,6 +6,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const URL = process.env.MONGO_URL;
 const httpStatusText = require('./utils/httpStatusText');
+const path = require('path');
 
 const usersRouter = require('./routes/users.route');
 const ordersRouter = require('./routes/orders.route');
@@ -14,6 +15,7 @@ const booksRouter = require('./routes/books.route');
 
 app.use(cors()) // TODO: remove this in production
 app.use(express.json());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // routes
 app.use('/api/users', usersRouter);
