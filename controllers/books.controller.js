@@ -2,6 +2,7 @@ const asyncWrapper = require("../middlewares/asyncWrapper");
 const Book = require("../models/books.model");
 const httpStatusText = require("../utils/httpStatusText");
 const appError = require("../utils/appError");
+const path = require('path');
 
 
 const getAllBooks = asyncWrapper(async(req , res , next) => {
@@ -62,10 +63,10 @@ const createBook = asyncWrapper(async (req, res , next) => {
       BookPrice,
       ISBN,
       NoPages,
-      BookCover,
       BookCategory,
       Rate,
       Replyno,
+      Descreption
     } = req.body;
     let book = await Book.findOne({ISBN: ISBN});
     if (book) {
@@ -80,25 +81,29 @@ const createBook = asyncWrapper(async (req, res , next) => {
       book.Author = Author;
     }
     if (BookPrice) {
-      book.BookPrice = BookPrice;
+      book.BookPrice = +BookPrice;
     }
     if (ISBN) {
       book.ISBN = ISBN;
     }
     if (NoPages) {
-      book.NoPages = NoPages;
+      book.NoPages = +NoPages;
     }
     if (BookCategory) {
       book.BookCategory = BookCategory;
     }
-    if (BookCover) {
-      book.BookCover = BookCover;
+    if (req.file) {
+      const coverName = req.file.filename; 
+      book.BookCover = path.join('uploads', coverName);
     }
     if (Rate) {
-      book.Rate = Rate;
+      book.Rate = +Rate;
     }
     if (Replyno) {
-      book.Replyno = Replyno;
+      book.Replyno = +Replyno;
+    }
+    if (Descreption) {
+      book.Descreption = Descreption;
     }
     await book.save();
     res.json({status: httpStatusText.SUCCESS , data: {book}});
@@ -113,7 +118,6 @@ const updateBookByid = asyncWrapper(async (req, res, next) => {
     BookPrice,
     ISBN,
     NoPages,
-    BookCover,
     BookCategory,
     Rate,
     Replyno,
@@ -130,25 +134,26 @@ const updateBookByid = asyncWrapper(async (req, res, next) => {
     book.Author = Author;
   }
   if (BookPrice) {
-    book.BookPrice = BookPrice;
+    book.BookPrice = +BookPrice;
   }
   if (ISBN) {
     book.ISBN = ISBN;
   }
   if (NoPages) {
-    book.NoPages = NoPages;
+    book.NoPages = +NoPages;
   }
   if (BookCategory) {
     book.BookCategory = BookCategory;
   }
-  if (BookCover) {
-    book.BookCover = BookCover;
+  if (req.file) {
+    const coverName = req.file.filename; 
+    book.BookCover = path.join('uploads', coverName);
   }
   if (Rate) {
-    book.Rate = Rate;
+    book.Rate = +Rate;
   }
   if (Replyno) {
-    book.Replyno = Replyno;
+    book.Replyno = +Replyno;
   }
   await book.save();
   res.json({ status: httpStatusText.SUCCESS, data: { book: book } });

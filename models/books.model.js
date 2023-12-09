@@ -23,7 +23,7 @@ const bookSchema = new mongoose.Schema({
   },
   BookCover:{
     type: String,
-    require:true
+    default:'uploads/book.png'
   },
   BookCategory:{
     type: String,
@@ -35,6 +35,10 @@ const bookSchema = new mongoose.Schema({
   },
   Replyno:{
     type: Number,
+    require:true
+  },
+  Descreption:{
+    type: String,
     require:true
   }
 });
