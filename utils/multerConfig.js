@@ -12,6 +12,18 @@ const diskStorage = multer.diskStorage({
     }
 })
 
+const diskStorageForBook = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads');
+    },
+    filename: function(req, file, cb) {
+        const ext = file.mimetype.split('/')[1];
+        const fileName = `Book-${Date.now()}.${ext}`;
+        cb(null, fileName);
+    }
+})
+
+
 const fileFilter = (req, file, cb) => {
     const imageType = file.mimetype.split('/')[0];
     
@@ -26,5 +38,12 @@ const upload = multer({
     storage: diskStorage,
     fileFilter
 })
+const uploadForBook = multer({ 
+    storage: diskStorageForBook,
+    fileFilter
+})
 
-module.exports = upload;
+module.exports = {
+    upload,
+    uploadForBook
+};

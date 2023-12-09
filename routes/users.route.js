@@ -4,7 +4,7 @@ const usersController = require('../controllers/users.controller')
 const verifyToken = require('../middlewares/verifyToken');
 const allowedTo = require('../middlewares/allowedTo');
 const userRoles = require('../utils/userRoles');
-const upload = require('../utils/multerConfig');
+const { upload } = require('../utils/multerConfig');
 
 router.route('/signup')
             .post(usersController.signup)
