@@ -73,6 +73,12 @@ const createOrder = asyncWrapper(async (req , res , next) => {
         return next(error);
     }
     order.user_id = user_id;
+    const user = await User.findById(user_id);
+    if (!user) {
+        const error = appError.create('User not found' , 404 , httpStatusText.FAIL);
+        return next(error);
+    }
+    order.user_name = user.username;
     if (books.length === 0) {
         const error = appError.create('Can not add empty orders' , 400 , httpStatusText.FAIL);
         return next(error);
