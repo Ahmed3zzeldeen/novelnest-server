@@ -24,7 +24,8 @@ const orderSchema = new mongoose.Schema(
         },
         total_payment: {
             type: Number , 
-            required: true
+            required: true,
+            default: 0
         } 
     },
     {
