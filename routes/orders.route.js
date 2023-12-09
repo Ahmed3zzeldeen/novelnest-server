@@ -7,7 +7,7 @@ const ordersController = require('../controllers/orders.controller')
 
 router.route('/')
             .post(ordersController.createOrder)
-            .get(verifyToken , ordersController.getAllOrders);
+            .get(verifyToken , allowedTo(userRoles.ADMIN) ,  ordersController.getAllOrders);
             
 router.route('/:id')
             .get(verifyToken ,ordersController.readOrder)
@@ -16,7 +16,7 @@ router.route('/:id')
 
 router.route('/userOrders/:id')
             .get(verifyToken , ordersController.getALLOrdersOfUser);
-router.route('/bookOrders/:id')
-            .get(verifyToken , ordersController.getAllOrdersOfBook);
+ router.route('/bookOrders/:id')
+            .get(verifyToken , allowedTo(userRoles.ADMIN) , ordersController.getAllOrdersOfBook);
 
 module.exports = router;
